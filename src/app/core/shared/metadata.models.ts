@@ -71,7 +71,17 @@ export class MetadataValue implements MetadataValueInterface {
       return undefined;
     }
   }
+
+  get languageValue(): string {
+    if (this.isVirtual) {
+      return this.language;
+    } else {
+      return undefined;
+    }
+  }
 }
+
+
 
 /** Constraints for matching metadata values. */
 export interface MetadataValueFilter {

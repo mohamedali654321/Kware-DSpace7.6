@@ -126,6 +126,7 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
    */
   ngOnInit(): void {
     this.instantiateComponent(this.object);
+    // console.log(this.object)
   }
 
   /**

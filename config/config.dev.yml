@@ -26,6 +26,14 @@ rest:
   port: 7077
   # NOTE: Space is capitalized because 'namespace' is a reserved string in TypeScript
   nameSpace: /server
+# rest:
+#   ssl: true
+#   host: repo-madina.api.kwaretech.com
+#   port: 443
+#   # NOTE: Space is capitalized because 'namespace' is a reserved string in TypeScript
+#   nameSpace: /server
+
+
 
 # Caching settings
 cache:

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Input, Output, PLATFORM_ID } from '@angular/core';
 import { Item } from '../../../core/shared/item.model';
 import { Observable } from 'rxjs';
 import { RemoteData } from '../../../core/data/remote-data';
@@ -62,6 +62,9 @@ export class RelatedItemsComponent extends AbstractIncrementalListComponent<Obse
    */
   fetchThumbnail: boolean;
 
+
+  @Output() relatedItems = new EventEmitter< any[]>();
+
   constructor(public relationshipService: RelationshipDataService,
               protected elementRef: ElementRef,
               @Inject(APP_CONFIG) protected appConfig: AppConfig,
@@ -79,6 +82,13 @@ export class RelatedItemsComponent extends AbstractIncrementalListComponent<Obse
       this.placeholderFontClass = 'hide-placeholder-text';
     }
     super.ngOnInit();
+
+    this.relatedItems.emit(this.objects);
+    this.objects.forEach((obj) => {
+      obj.subscribe(val=>{
+        console.log(val)
+      })
+    })
   }
 
   /**

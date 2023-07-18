@@ -19,6 +19,7 @@ import { AuthorizationDataService } from '../../core/data/feature-authorization/
 import { ServerResponseService } from '../../core/services/server-response.service';
 import { SignpostingDataService } from '../../core/data/signposting-data.service';
 import { LinkHeadService } from '../../core/services/link-head.service';
+import { VirtualMetadataFieldsService } from 'src/app/core/services/virtual-metadata-fields.service';
 
 /**
  * This component renders a full item page.
@@ -55,6 +56,7 @@ export class FullItemPageComponent extends ItemPageComponent implements OnInit, 
     protected responseService: ServerResponseService,
     protected signpostingDataService: SignpostingDataService,
     protected linkHeadService: LinkHeadService,
+    protected virtualMetadataFieldsService:VirtualMetadataFieldsService ,
     @Inject(PLATFORM_ID) protected platformId: string,
   ) {
     super(route, router, items, authService, authorizationService, responseService, signpostingDataService, linkHeadService, platformId);
@@ -62,7 +64,9 @@ export class FullItemPageComponent extends ItemPageComponent implements OnInit, 
 
   /*** AoT inheritance fix, will hopefully be resolved in the near future **/
   ngOnInit(): void {
+   
     super.ngOnInit();
+   this.itemRD$.subscribe(item=>{console.log(item.payload)})
     this.metadata$ = this.itemRD$.pipe(
       map((rd: RemoteData<Item>) => rd.payload),
       filter((item: Item) => hasValue(item)),

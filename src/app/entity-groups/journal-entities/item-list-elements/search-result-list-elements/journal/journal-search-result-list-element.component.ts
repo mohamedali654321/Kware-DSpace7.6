@@ -22,6 +22,7 @@ export class JournalSearchResultListElementComponent extends ItemSearchResultLis
   ngOnInit(): void {
     super.ngOnInit();
     this.showThumbnails = this.appConfig.browseBy.showThumbnails;
+
   }
 
 }

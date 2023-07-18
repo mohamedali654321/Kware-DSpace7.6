@@ -4,6 +4,7 @@ import { SectionsDirective } from '../sections.directive';
 import { SectionDataObject } from '../models/section-data.model';
 import { rendersSectionType } from '../sections-decorator';
 import { AlertType } from '../../../shared/alert/aletr-type';
+import { BehaviorSubject } from 'rxjs';
 
 /**
  * This component represents a section that contains the submission license form.
@@ -50,6 +51,8 @@ export class SubmissionSectionContainerComponent implements OnInit {
    */
   @ViewChild('sectionRef') sectionRef: SectionsDirective;
 
+  public sectionID = new BehaviorSubject(''); //kware-edit mohamed
+
   /**
    * Initialize instance variables
    *
@@ -70,6 +73,11 @@ export class SubmissionSectionContainerComponent implements OnInit {
       ],
       parent: this.injector
     });
+            //kware-edit-start mohamed
+            if (!this.sectionData.id.includes('LinkedDataStep') && !this.sectionData.id.includes('SpecificationsStep')){
+              this.sectionID.next(this.sectionData.id);
+            }
+            //kware-edit-end mohamed
   }
 
   /**

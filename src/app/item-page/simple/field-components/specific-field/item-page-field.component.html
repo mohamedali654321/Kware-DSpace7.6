@@ -8,7 +8,7 @@
     [browseDefinition]="browseDefinition|async"
   ></ds-metadata-values> -->
   <ds-metadata-values
-    [mdValues]="item?.allMetadata(fields)"
+    [mdValues]="(newMetadataValues)"
     [separator]="separator"
     [label]="label"
     [enableMarkdown]="enableMarkdown"

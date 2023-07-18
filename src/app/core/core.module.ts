@@ -183,6 +183,7 @@ import { ValueListBrowseDefinition } from './shared/value-list-browse-definition
 import { NonHierarchicalBrowseDefinition } from './shared/non-hierarchical-browse-definition';
 import { BulkAccessConditionOptions } from './config/models/bulk-access-condition-options.model';
 import { SharedVariableService } from './services/share-variable.service';
+import { VirtualMetadataFieldsService } from './services/virtual-metadata-fields.service';
 
 /**
  * When not in production, endpoint responses can be mocked for testing purposes
@@ -306,7 +307,8 @@ const PROVIDERS = [
   OrcidQueueDataService,
   OrcidHistoryDataService,
   SupervisionOrderDataService,
-  SharedVariableService
+  SharedVariableService,
+  VirtualMetadataFieldsService
 ];
 
 /**

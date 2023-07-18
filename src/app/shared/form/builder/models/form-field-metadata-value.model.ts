@@ -34,9 +34,19 @@ export class FormFieldMetadataValueObject implements MetadataValueInterface {
               otherInformation: any = null,
               metadata: string = null) {
     this.value = isNotNull(value) ? ((typeof value === 'string') ? value.trim() : value) : null;
-    this.language = language;
+    this.language = "ar";
     this.authority = authority;
     this.display = display || value;
+
+
+    this.language = language;
+    if (authority != null && (isEmpty(language) || language === null)) {
+      this.language = language;
+    } else if (isNotEmpty(language)) {
+      this.language = language;
+    } else {
+      this.language = language;
+    }
 
     this.confidence = confidence;
     if (authority != null && (isEmpty(confidence) || confidence === -1)) {

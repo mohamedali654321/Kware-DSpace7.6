@@ -53,7 +53,7 @@
                 </div>
 
                 <div *ngIf="dso.allMetadata(['organization.legalName']).length > 0 ">
-                  <span style="color:#207698!important ;font-size: 15px;font-weight: 600;" [innerHtml]="(dso.allMetadata('organization.legalName') | kwareLanguageSplit | kwareTranslate)"></span>
+                  <span style="color:#207698!important ;font-size: 15px;font-weight: 600;" [innerHtml]="(virtualMetadataFieldsService.initVirtualProperties(dso,'organization.legalName') | async)"></span>
 
                 </div>
           <span class="text-muted">

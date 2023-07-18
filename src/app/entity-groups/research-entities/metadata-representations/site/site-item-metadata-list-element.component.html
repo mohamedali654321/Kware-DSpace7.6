@@ -7,7 +7,7 @@
 </ng-template>
 <ds-truncatable [id]="mdRepresentation.id">
   <a [routerLink]="[itemPageRoute]"
-  [innerHTML]="(localeService.getCurrentLanguageCode() === 'en' && mdRepresentation.firstMetadataValue('place.childLegalName.alternative') )? (mdRepresentation.firstMetadataValue('place.childLegalName.alternative') | kwareTranslate) : (mdRepresentation.getValue() | kwareTranslate)"
+  [innerHTML]="(mdRepresentation.allMetadata('place.childLegalName') | kwareLanguageSplit)"
      [ngbTooltip]="mdRepresentation.allMetadata(['dc.description']).length > 0 ? (descTemplate | kwareTranslate) : null"></a>
 
 </ds-truncatable>

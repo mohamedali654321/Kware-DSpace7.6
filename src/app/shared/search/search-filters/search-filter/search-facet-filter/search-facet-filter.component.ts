@@ -305,6 +305,10 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
     return facetValues$.pipe(
       mergeMap((facetOutcome) => {
         const newValues$ = facetOutcome.values;
+        facetOutcome.values.subscribe((values) => {values.payload.page.map(el=>{
+          
+          console.log(el)
+        }) });
 
         if (this.collapseNextUpdate) {
           this.showFirstPageOnly();

@@ -21,19 +21,29 @@
   <li class="dropdown-item disabled" *ngIf="searchListCollection?.length == 0 && !(isLoading | async)">
     {{'submission.sections.general.no-collection' | translate}}
   </li>
+      <!-- kware start edit
+    - check if searchListCollection > 0 to display collection dropdown menu if not disabled it
+    - add background to selected collection
+    - compare between selected collection id and search list collection IDs   
+    - disabled click if selected collection 
+  -->
   <ng-container *ngIf="searchListCollection?.length > 0">
-    <li *ngFor="let listItem of searchListCollection"
-            class="dropdown-item collection-item"
-            title="{{ listItem.collection.name |kwareTranslate}}"
-            (click)="onSelect(listItem)">
-      <div class="list-unstyled mb-0">
-        <div class="list-item text-truncate text-secondary" *ngFor="let item of listItem.communities">
+    <button *ngFor="let listItem of searchListCollection"
+            class="dropdown-item collection-item text-primary"
+            [ngClass]="{'bg-primary selectedCollection': listItem.collection.id === selectedCollection}"
+            title="{{ listItem.collection.name | kwareTranslate }}"
+            (click)="listItem.collection.id === selectedCollection ? $event.stopPropagation():onSelect(listItem)"
+            [disabled]="listItem.collection.id === selectedCollection"
+            >
+      <ul class="list-unstyled mb-0">
+        <li class="list-item text-truncate " *ngFor="let item of listItem.communities">
           {{ item.name |kwareTranslate}} <i class="fa fa-level-down" aria-hidden="true"></i>
-        </div>
-        <div class="list-item text-truncate text-primary font-weight-bold">{{ listItem.collection.name |kwareTranslate}}</div>
-      </div>
-    </li>
+        </li>
+        <li class="list-item text-truncate  font-weight-bold">{{ listItem.collection.name | kwareTranslate}}</li>
+      </ul>
+    </button>
   </ng-container>
+   <!-- kware end edit -->
   <button class="dropdown-item disabled" *ngIf="(isLoading | async)">
     <ds-themed-loading message="{{'loading.default' | translate}}">
     </ds-themed-loading>

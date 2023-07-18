@@ -37,7 +37,7 @@
             <!-- kware-edit -->
             <hr>
             <div *ngVar="(itemRD$ | async) as itemRD">
-              <div class="mt-4" *ngIf="itemRD?.hasSucceeded" @fadeIn>
+              <div class="mt-4" *ngIf="itemRD?.hasSucceeded" >
                       <h3>{{'home.recent-submissions' | translate}} </h3>
                   <h3 class="sr-only">{{'collection.page.browse.recent.head' | translate}}</h3>
                   <ds-viewable-collection

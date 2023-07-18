@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { BrowseDefinition } from '../../../../core/shared/browse-definition.model';
 import { BrowseDefinitionDataService } from '../../../../core/browse/browse-definition-data.service';
 import { getRemoteDataPayload } from '../../../../core/shared/operators';
+import { LocaleService } from 'src/app/core/locale/locale.service';
+import { GetMetadataByLanguageService } from 'src/app/core/services/get-metadata-by-language.service';
+import { MetadataValue } from 'src/app/core/shared/metadata.models';
 
 /**
  * This component can be used to represent metadata on a simple item page.
@@ -17,7 +20,10 @@ import { getRemoteDataPayload } from '../../../../core/shared/operators';
 })
 export class ItemPageFieldComponent {
 
-    constructor(protected browseDefinitionDataService: BrowseDefinitionDataService) {
+    constructor(protected browseDefinitionDataService: BrowseDefinitionDataService,
+      public localeService: LocaleService,
+      public getMetadataByLanguageService :GetMetadataByLanguageService,
+      ) {
     }
 
    /**
@@ -34,6 +40,8 @@ export class ItemPageFieldComponent {
     * Fields (schema.element.qualifier) used to render their values.
     */
    fields: string[];
+
+   newMetadataValues:MetadataValue [];
 
    /**
     * Label i18n key for the rendered metadata
@@ -54,6 +62,7 @@ export class ItemPageFieldComponent {
 
    
    ngOnInit(): void {
+    
        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
        //Add 'implements OnInit' to the class.
        (this.fields.includes('dc.description') || this.fields.includes('dc.description.abstract') || this.fields.includes('event.about') 
@@ -64,7 +73,17 @@ export class ItemPageFieldComponent {
        || this.fields.includes('dc.description.statementofresponsibility') || this.fields.includes('dc.description.isversionof')
         ) 
        ? this.enableMarkdown = true : this.enableMarkdown = false;
-     }
+      /**
+       * kware-edit start
+       * display metedata fields based on language iterface
+       *  */ 
+
+        this.newMetadataValues= this.item.allMetadata(this.fields).length > 1 && this.item.allMetadata(this.fields)[0].language ? this.item.allMetadata(this.fields).filter(item =>item.language === this.localeService.getCurrentLanguageCode()) : this.item.allMetadata(this.fields);
+        /**
+       * kware-edit end  */ 
+
+       
+    }
    /**
     * Return browse definition that matches any field used in this component if it is configured as a browse
     * link in dspace.cfg (webui.browse.link.<n>)

@@ -243,7 +243,7 @@ import { ThemedPageErrorComponent } from './page-error/themed-page-error.compone
     ], {
       // enableTracing: true,
       useHash: false,
-      scrollPositionRestoration: 'enabled',
+      scrollPositionRestoration: 'disabled', // disable scroll to top in modal search 
       anchorScrolling: 'enabled',
       initialNavigation: 'enabledBlocking',
       preloadingStrategy: NoPreloading,

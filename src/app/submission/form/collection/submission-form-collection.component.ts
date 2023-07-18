@@ -30,6 +30,7 @@ import { SectionsService } from '../../sections/sections.service';
 import { getFirstSucceededRemoteDataPayload } from '../../../core/shared/operators';
 import { SectionsType } from '../../sections/sections-type';
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * This component allows to show the current collection the submission belonging to and to change it.
@@ -40,7 +41,24 @@ import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
   templateUrl: './submission-form-collection.component.html'
 })
 export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
+  /*
+  kware start edit
+  - list collection length variable
+  **/
+  listCollectionLength: number;
 
+  /*
+  kware end edit
+  **/
+     /*
+   kware start edit
+   - check route if from fast add bt
+   */
+   currentEntityType ='';
+
+   isFastAdd:boolean;
+ 
+     /* kware end edit*/ 
   /**
    * The current collection id this submission belonging to
    * @type {string}
@@ -124,6 +142,7 @@ export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
               private submissionService: SubmissionService,
               private sectionsService: SectionsService,
               public dsoNameService: DSONameService,
+              private route: ActivatedRoute,
   ) {
   }
 
@@ -148,6 +167,7 @@ export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
   ngOnInit() {
     this.pathCombiner = new JsonPatchOperationPathCombiner('sections', 'collection');
     this.available$ = this.sectionsService.isSectionTypeAvailable(this.submissionId, SectionsType.collection);
+    this.route?.queryParams?.subscribe((params=>{this.isFastAdd = params.action ? true :false}));
   }
 
   /**
@@ -206,4 +226,15 @@ export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
       this.collectionDropdown?.reset();
     }
   }
+
+    /* kware start edit
+  - get listCollectionLength to check if  > 1 or not
+
+  **/
+  getListCollectionLength($event: number){
+    this.listCollectionLength=$event;    
+  }
+  /*
+  kware end edit
+  **/
 }

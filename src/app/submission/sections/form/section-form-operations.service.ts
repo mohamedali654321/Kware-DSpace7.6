@@ -242,7 +242,7 @@ export class SectionFormOperationsService {
             authority = Object.assign(new VocabularyEntry(), authority, { language });
             value[index] = authority;
           });
-          fieldValue = value;
+          fieldValue = new FormFieldMetadataValueObject(value, language);;
         } else {
           fieldValue = Object.assign(new VocabularyEntry(), value, { language });
         }

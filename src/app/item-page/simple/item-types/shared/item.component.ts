@@ -39,6 +39,8 @@ export class ItemComponent implements OnInit {
    */
   itemPageRoute: string;
 
+
+relationsItems;
   /**
    * Enables the mirador component.
    */
@@ -89,7 +91,9 @@ export class ItemComponent implements OnInit {
   };
 
   ngOnInit(): void {
-
+  //   console.log(this.relationsItems)
+  // this.relationsItems=this.object.metadataAsList.filter(md=>{return md.authority !== null && md.authority.includes('virtual::')  && !md.key.includes('relation')});
+  // console.log(this.relationsItems)
 
     this.subs.push(this.hostWindowService.isXs()
     .subscribe((status: boolean) => {

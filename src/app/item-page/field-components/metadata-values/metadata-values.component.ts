@@ -4,6 +4,7 @@ import { APP_CONFIG, AppConfig } from '../../../../config/app-config.interface';
 import { BrowseDefinition } from '../../../core/shared/browse-definition.model';
 import { hasValue } from '../../../shared/empty.util';
 import { VALUE_LIST_BROWSE_DEFINITION } from '../../../core/shared/value-list-browse-definition.resource-type';
+import { LocaleService } from 'src/app/core/locale/locale.service';
 
 /**
  * This component renders the configured 'values' into the ds-metadata-field-wrapper component.
@@ -18,6 +19,7 @@ export class MetadataValuesComponent implements OnChanges {
 
   constructor(
     @Inject(APP_CONFIG) private appConfig: AppConfig,
+    public localeService: LocaleService,
   ) {
   }
 
@@ -25,7 +27,7 @@ export class MetadataValuesComponent implements OnChanges {
    * The metadata values to display
    */
   @Input() mdValues: MetadataValue[];
-
+  Values: any;
   /**
    * The seperator used to split the metadata values (can contain HTML)
    */
@@ -99,7 +101,8 @@ export class MetadataValuesComponent implements OnChanges {
       // kware edit
       ngOnInit(): void {
 
-      
+      //   this.mdValues=this.mdValues.filter( mdValue=>{return mdValue.language && mdValue.language === this.localeService.getCurrentLanguageCode()});
+      // console.log(this.mdValues);
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
         //Add 'implements OnInit' to the class.
   
@@ -122,6 +125,7 @@ export class MetadataValuesComponent implements OnChanges {
   
           
       }
+      
   
        // kware edit end
 }

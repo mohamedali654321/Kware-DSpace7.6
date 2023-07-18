@@ -1678,4 +1678,9 @@ a{
     border-bottom-left-radius: 5px !important;
   }
 }
+
+::ng-deep  .archived-items-lead{
+  background-color: #680da8 !important;
+  color: #FFF !important;
+}
 // kware end edit -- issue.7.6.001

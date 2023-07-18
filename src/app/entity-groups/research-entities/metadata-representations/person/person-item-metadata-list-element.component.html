@@ -13,7 +13,7 @@
 
      [ngbTooltip]="mdRepresentation.allMetadata(['person.jobTitle']).length > 0 ? (descTemplate | kwareTranslate ) : null">
      <!-- {{convertComma((mdRepresentation.getValue()?.split(",")[0] | kwareTranslate) + ',' +  (mdRepresentation.getValue()?.split(",")[1] | kwareTranslate))}} -->
-     {{convertComma((localeService.getCurrentLanguageCode() === 'en' && mdRepresentation.firstMetadataValue('person.name.alternative') )? (mdRepresentation.firstMetadataValue('person.name.alternative') | kwareTranslate) : (mdRepresentation.getValue() | kwareTranslate))}}
+     {{mdRepresentation.allMetadata('person.name') | kwareLanguageSplit}}
 
     </a>
 </ds-truncatable>

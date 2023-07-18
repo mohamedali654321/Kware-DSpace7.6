@@ -6462,5 +6462,79 @@
   "browse.taxonomy.button": "استعراض",
 "browse.comcol.by.srsc": "بواسطة تصنيف الموضوع",
 
+     "collection.edit.tabs.access-control.head": "التحكم في الوصول" ,
+     "item-access-control-title": "يسمح لك هذا النموذج بإجراء تغييرات على شروط الوصول إلى البيانات الوصفية للعنصر أو تدفقات البت الخاصة به.",
+
+   "collection-access-control-title": "هذا النموذج يسمح لك بإجراء تغييرات على شروط الوصول لجميع العناصر التي تمتلكها هذه المجموعة. يمكن إجراء تغييرات إما على كل بيانات تعريف العنصر أو كل المحتوى (دفق البتات).",
+
+   "community-access-control-title": "هذا النموذج يسمح لك بإجراء تغييرات على شروط الوصول لجميع العناصر التي تمتلكها أي مجموعة ضمن هذا المجتمع. يمكن إجراء التغييرات إما على كل البيانات الوصفية للعنصر أو كل المحتوى (دفق البتات). ",
+
+   "access-control-item-header-toggle": "البيانات الوصفية للعنصر",
+
+   "access-control-bitstream-header-toggle": "تدفق البت",
+
+   "access-control-mode": "الوضع" ,
+
+   "access-control-access-conditions": "شروط الوصول" ,
+
+   "access-control-no-access-terms-warning-message": "حاليًا , لا توجد شروط وصول محددة أدناه. إذا تم تنفيذها , فسيحل هذا محل شروط الوصول الحالية بشروط الوصول الافتراضية الموروثة من المجموعة المالكة." ,
+
+   "access-control-replace-all": "استبدل شروط الوصول" ,
+
+   "access-control-add-to-existing": "إضافة إلى الموجودة" ,
+
+   "access-control-limit-to-specific": "قصر التغييرات على تدفق بت معين" ,
+
+   "access-control-process-all-bitstreams": "تحديث جميع تدفقات البت في العنصر",
+
+   "access-control-bitstreams-selected": "تم اختيار تدفق البت" ,
+
+   "access-control-cancel": "إلغاء" ,
+
+   "access-control-execute": "تنفيذ" ,
+
+   "access-control-add-more": "أضف المزيد",
+
+   "access-control-select-bitstreams-modal.title": "حدد تدفق البت",
+
+   "access-control-select-bitstreams-modal.no-items": "لا توجد عناصر للعرض.",
+
+   "access-control-select-bitstreams-modal.close": "إغلاق",
+
+   "access-control-option-label": "نوع شرط الوصول" ,
+
+   "access-control-option-note": "اختر شرط وصول لتطبيقه على الكائنات المحددة.",
+
+   "access-control-option-start-date": "منح حق الوصول من" ,
+
+   "access-control-option-start-date-note": "حدد التاريخ الذي يبدأ منه تطبيق شرط الوصول ذي الصلة" ,
+
+   "access-control-option-end-date": "منح الوصول حتى" ,
+
+   "access-control-option-end-date-note": "حدد التاريخ الذي حتى يتم تطبيق شرط الوصول ذي الصلة" ,
+
+   "access-control-no-access-terms-warning-message": "حاليًا ، لا توجد شروط وصول محددة أدناه. إذا تم تنفيذها ، فسيحل هذا محل شروط الوصول الحالية بشروط الوصول الافتراضية الموروثة من المجموعة المالكة.",
+   "access-control-no-access-conditions-warning-message": "حاليًا ، لا توجد شروط وصول محددة أدناه. إذا تم تنفيذها ، فسيحل هذا محل شروط الوصول الحالية بشروط الوصول الافتراضية الموروثة من المجموعة المالكة." ,
+   
+ "item.edit.tabs.access-control.head": "التحكم في الوصول",
+
+
+ "menu.section.access_control_bulk": "إدارة الوصول المجمع",
+ "admin.access-control.bulk-access.breadcrumbs": "إدارة الوصول المجمع",
+"admin.access-control.bulk-access.breadcrumbs": "إدارة الوصول المجمع",
+
+   "administrativeBulkAccess.search.results.head": "نتائج البحث",
+
+   "admin.access-control.bulk-access": "إدارة الوصول المجمع",
+
+   "admin.access-control.bulk-access.title": "إدارة الوصول المجمع",
+
+   "admin.access-control.bulk-access-browse.header": "الخطوة 1: حدد الكائنات",
+
+   "admin.access-control.bulk-access-browse.search.header": "بحث",
+
+   "admin.access-control.bulk-access-browse.selected.header": "التحديد الحالي ({{number}})",
+   "admin.access-control.bulk-access-settings.header": "الخطوة 2: العملية المطلوب تنفيذها",
+
 
 }

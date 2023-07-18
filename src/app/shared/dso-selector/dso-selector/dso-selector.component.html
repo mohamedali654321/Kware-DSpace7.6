@@ -19,15 +19,18 @@
               *ngIf="(listEntries$ | async).length == 0">
         {{'dso-selector.no-results' | translate: { type: typesString } }}
       </button>
-      <button *ngFor="let listEntry of (listEntries$ | async)"
-              class="list-group-item list-group-item-action border-0 list-entry"
-              [ngClass]="{'bg-primary': listEntry['id'] === currentDSOId}"
-              title="{{ getName(listEntry) }}"
-              dsHoverClass="ds-hover"
-              (click)="onClick(listEntry)" #listEntryElement>
-        <ds-listable-object-component-loader [object]="listEntry" [viewMode]="viewMode"
-                                             [linkType]=linkTypes.None [context]="getContext(listEntry['id'])"></ds-listable-object-component-loader>
-      </button>
+    <!-- kware-edit start
+    - add background for selected list-entry -->
+    <button *ngFor="let listEntry of (listEntries$ | async)"
+            class="list-group-item list-group-item-action border-0 list-entry"
+            [ngClass]="{'bg-primary': listEntry.indexableObject.id === currentDSOId}"
+            title="{{ getName(listEntry) }}"
+            dsHoverClass="ds-hover"
+            (click)="onSelect.emit(listEntry.indexableObject)" #listEntryElement>
+      <ds-listable-object-component-loader [object]="listEntry" [viewMode]="viewMode"
+                                           [linkType]=linkTypes.None [context]="getContext(listEntry.indexableObject.id)"></ds-listable-object-component-loader>
+    </button>
+    <!-- kware-edit end -->
     </ng-container>
     <button *ngIf="loading"
             class="list-group-item list-group-item-action border-0 list-entry">

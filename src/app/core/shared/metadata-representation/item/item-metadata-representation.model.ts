@@ -34,7 +34,7 @@ export class ItemMetadataRepresentation extends Item implements MetadataRepresen
   /**
    * Get the value to display, depending on the itemType
    */
-  getValue(): string {
+  getValue(): any {
     return this.virtualMetadata.value;
   }
 

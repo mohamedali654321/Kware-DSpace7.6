@@ -20,7 +20,7 @@
             <ng-container *ngFor="let mdEntry of (metadata$ | async) | keyvalue">
               <tr *ngFor="let mdValue of mdEntry.value">
                 <td>{{mdEntry.key}}</td>
-                <td>{{mdEntry.key.includes('.contributor.')? ((mdValue.value?.split(",")[0] | kwareTranslate) + ',' +  (mdValue.value?.split(",")[1] | kwareTranslate)) : mdValue.value | kwareTranslate}}</td>
+                <td>{{mdValue.isVirtual && !mdEntry.key.includes('relation.is') ? (virtualMetadataFieldsService.initVirtualProperties(item,mdEntry.key) | async) : mdValue.value | kwareTranslate}}</td>
                 <td>{{mdValue.language}}</td>
               </tr>
             </ng-container>

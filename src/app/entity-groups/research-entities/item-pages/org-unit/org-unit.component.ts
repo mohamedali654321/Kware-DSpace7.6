@@ -13,4 +13,15 @@ import { ItemComponent } from '../../../../item-page/simple/item-types/shared/it
  * The component for displaying metadata and relations of an item of the type Organisation Unit
  */
 export class OrgUnitComponent extends ItemComponent {
+
+  relatedItems;
+
+
+  getRelatedItems($event: any){
+    this.relatedItems=$event;    
+  }
+
+  ngOnInit(): void {
+    console.log(this.relatedItems)
+  }
 }

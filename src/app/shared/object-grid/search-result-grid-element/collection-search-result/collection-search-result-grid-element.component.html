@@ -9,7 +9,10 @@
   </span>
   <div class="card-body">
     <ds-themed-badges *ngIf="showLabel" [object]="dso" [context]="context"></ds-themed-badges>
-    <h4 class="card-title">{{ dsoNameService.getName(dso)  | kwareTranslate}}</h4>
+    <h4 class="card-title">{{ dsoNameService.getName(dso)  | kwareTranslate}}
+      <span  class="pr-2">&nbsp;</span>   
+      <span style="font-size: 13px" *ngIf="dso.archivedItemsCount >= 0" class="badge badge-pill badge-secondary align-self-center archived-items-lead">{{dso.archivedItemsCount}}</span>
+    </h4>
     <p *ngIf="dso.shortDescription" class="card-text">{{dso.shortDescription | kwareTranslate}}</p>
     <div *ngIf="linkType != linkTypes.None" class="text-center">
       <a [target]="(linkType == linkTypes.ExternalLink) ? '_blank' : '_self'" [attr.rel]="(linkType == linkTypes.ExternalLink) ? 'noopener noreferrer' : null" [routerLink]="['/collections/',  dso.id]" class="lead btn btn-primary viewButton">{{ 'search.results.view-result' | translate}}</a>

@@ -4,6 +4,7 @@ import { DSpaceObject } from '../shared/dspace-object.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Metadata } from '../shared/metadata.utils';
 import { LocaleService } from '../locale/locale.service';
+import { GetMetadataByLanguageService } from '../services/get-metadata-by-language.service';
 
 /**
  * Returns a name for a {@link DSpaceObject} based
@@ -33,6 +34,7 @@ export class DSONameService {
   
 
   constructor(private translateService: TranslateService,
+    public getMetadataByLanguageService :GetMetadataByLanguageService,
     public localeService: LocaleService , /* kware edit - call service from LocaleService */
 
     ) {
@@ -65,241 +67,53 @@ export class DSONameService {
       const givenName = this.localeService.getStringByLocale(dso.firstMetadataValue('person.givenName'));
       this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
       this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-      if(this.localeAr && dso.firstMetadataValue('person.name')){
-        return this.localeService.getStringByLocale(dso.firstMetadataValue('person.name')) || dso.name;
-      }
-      else if(this.localeEn && !!dso.firstMetadataValue('person.name.alternative')){
-        return this.localeService.getStringByLocale(dso.firstMetadataValue('person.name.alternative')) || dso.name;
-      }
-      else if(this.localeEn && !dso.firstMetadataValue('person.name.alternative')){
-        return this.localeService.getStringByLocale(dso.firstMetadataValue('person.name')) || dso.name;
-      }
-    else  if ((isEmpty(familyName) || isEmpty(givenName)) && isNotEmpty(dso.firstMetadataValue('dspace.object.owner'))) {
+      if ((isEmpty(familyName) || isEmpty(givenName)) && isNotEmpty(dso.firstMetadataValue('dspace.object.owner'))) {
         return this.localeService.getStringByLocale(dso.firstMetadataValue('dspace.object.owner')) || dso.name;
       }
+      else if( !!dso.firstMetadataValue('person.name')){
+        return this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('person.name')) || dso.name;
+      }
+
       else if (isEmpty(familyName) || isEmpty(givenName)) {
         return familyName || givenName;
       }else if   ((isEmpty(familyName) && isEmpty(givenName))&& isEmpty(dso.firstMetadataValue('dspace.object.owner'))) {
         return this.localeService.getStringByLocale(dso.firstMetadataValue('dc.title')) || dso.name;
       } 
      
-       else {
-        return this.convertComma(`${familyName}, ${givenName}`);
-      }
+      //  else {
+      //   return this.convertComma(`${familyName}, ${givenName}`);
+      // }
     },
     OrgUnit: (dso: DSpaceObject): string => {
-      this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
-      this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-       switch (true){
-           case (this.localeAr):
-              this.OrgUnitName = dso.firstMetadataValue('organization.legalName');
-              break;
-              case (this.localeAr && !!dso.firstMetadataValue('organization.legalName.alternative') ) :
-                this.OrgUnitName = dso.firstMetadataValue('organization.legalName');
-                break;
-            case (this.localeEn && !!dso.firstMetadataValue('organization.legalName.alternative') ) :
-              this.OrgUnitName = dso.firstMetadataValue('organization.legalName.alternative');
-              break;
-              case (this.localeEn  && !dso.firstMetadataValue('organization.legalName.alternative') ) :
-                this.OrgUnitName = this.localeService.getStringByLocale(dso.firstMetadataValue('organization.legalName'));
-                break;
-   
-       }
-      return  this.localeService.getStringByLocale(this.OrgUnitName);
+      return this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('organization.legalName'));
     },
     Administration: (dso: DSpaceObject): string => {
-      this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
-      this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-       switch (true){
-           case (this.localeAr):
-              this.AdministrationName = dso.firstMetadataValue('organization.childLegalName');
-              break;
-              case (this.localeAr && !!dso.firstMetadataValue('organization.childLegalName.alternative') ) :
-                this.AdministrationName = dso.firstMetadataValue('organization.childLegalName');
-                break;
-            case (this.localeEn && !!dso.firstMetadataValue('organization.childLegalName.alternative') ) :
-              this.AdministrationName = dso.firstMetadataValue('organization.childLegalName.alternative');
-              break;
-              case (this.localeEn  && !dso.firstMetadataValue('organization.childLegalName.alternative') ) :
-                this.AdministrationName = this.localeService.getStringByLocale(dso.firstMetadataValue('organization.childLegalName'));
-                break;
-   
-       }
-      return this.localeService.getStringByLocale(this.AdministrationName);
+      return this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('organization.childLegalName'));
     },
     Place: (dso: DSpaceObject): string => {
-      this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
-      this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-       switch (true){
-           case (this.localeAr):
-            this.PlaceName = dso.firstMetadataValue('place.legalName');
-              break;
-              case (this.localeAr && !!dso.firstMetadataValue('place.legalName.alternative') ) :
-                this.PlaceName = dso.firstMetadataValue('place.legalName');
-                break;
-            case (this.localeEn && !!dso.firstMetadataValue('place.legalName.alternative') ) :
-              this.PlaceName = dso.firstMetadataValue('place.legalName.alternative');
-              break;
-              case (this.localeEn  && !dso.firstMetadataValue('place.legalName.alternative') ) :
-                this.PlaceName = this.localeService.getStringByLocale(dso.firstMetadataValue('place.legalName'));
-                break;
-   
-       }
-      return this.localeService.getStringByLocale(this.PlaceName);
+      return this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('place.legalName'));
     },
     Event: (dso: DSpaceObject): string => {
-      this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
-      this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-       switch (true){
-           case (this.localeAr):
-            this.EventName = dso.firstMetadataValue('event.title');
-              break;
-              case (this.localeAr && !!dso.firstMetadataValue('event.title.alternative') ) :
-                this.EventName = dso.firstMetadataValue('event.title');
-                break;
-            case (this.localeEn && !!dso.firstMetadataValue('event.title.alternative') ) :
-              this.EventName = dso.firstMetadataValue('event.title.alternative');
-              break;
-              case (this.localeEn  && !dso.firstMetadataValue('event.title.alternative') ) :
-                this.EventName = this.localeService.getStringByLocale(dso.firstMetadataValue('event.title'));
-                break;
-   
-       }
-      return this.localeService.getStringByLocale(this.EventName);
+      return this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('event.title'));
     },
     Era: (dso: DSpaceObject): string => {
-      this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
-      this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-       switch (true){
-           case (this.localeAr):
-            this.EraName = dso.firstMetadataValue('era.title');
-              break;
-              case (this.localeAr && !!dso.firstMetadataValue('era.title.alternative') ) :
-                this.EraName = dso.firstMetadataValue('era.title');
-                break;
-            case (this.localeEn && !!dso.firstMetadataValue('era.title.alternative') ) :
-              this.EraName = dso.firstMetadataValue('era.title.alternative');
-              break;
-              case (this.localeEn  && !dso.firstMetadataValue('era.title.alternative') ) :
-                this.EraName = this.localeService.getStringByLocale(dso.firstMetadataValue('era.title'));
-                break;
-   
-       }
-      return this.localeService.getStringByLocale(this.EraName);
+      return this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('era.title'));
     },
     Series: (dso: DSpaceObject): string => {
-      this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
-      this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-       switch (true){
-           case (this.localeAr):
-            this.SeriesName = dso.firstMetadataValue('series.name');
-              break;
-              case (this.localeAr && !!dso.firstMetadataValue('series.name.alternative') ) :
-                this.SeriesName = dso.firstMetadataValue('series.name');
-                break;
-            case (this.localeEn && !!dso.firstMetadataValue('series.name.alternative') ) :
-              this.SeriesName = dso.firstMetadataValue('series.name.alternative');
-              break;
-              case (this.localeEn  && !dso.firstMetadataValue('series.name.alternative') ) :
-                this.SeriesName = this.localeService.getStringByLocale(dso.firstMetadataValue('series.name'));
-                break;
-   
-       }
-      return this.localeService.getStringByLocale(this.SeriesName);
+      return this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('series.name'));
     },
     Project: (dso: DSpaceObject): string => {
-      this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
-      this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-       switch (true){
-           case (this.localeAr):
-            this.ProjectName = dso.firstMetadataValue('project.name');
-              break;
-              case (this.localeAr && !!dso.firstMetadataValue('project.name.alternative') ) :
-                this.ProjectName = dso.firstMetadataValue('project.name');
-                break;
-            case (this.localeEn && !!dso.firstMetadataValue('project.name.alternative') ) :
-              this.ProjectName = dso.firstMetadataValue('project.name.alternative');
-              break;
-              case (this.localeEn  && !dso.firstMetadataValue('project.name.alternative') ) :
-                this.ProjectName = this.localeService.getStringByLocale(dso.firstMetadataValue('project.name'));
-                break;
-   
-       }
-      return this.localeService.getStringByLocale(this.ProjectName);
+      return  this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('project.name'));
     },
     Site: (dso: DSpaceObject): string => {
-      this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
-      this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-       switch (true){
-           case (this.localeAr):
-            this.SiteName = dso.firstMetadataValue('place.childLegalName');
-              break;
-              case (this.localeAr && !!dso.firstMetadataValue('place.childLegalName.alternative') ) :
-                this.SiteName = dso.firstMetadataValue('place.childLegalName');
-                break;
-            case (this.localeEn && !!dso.firstMetadataValue('place.childLegalName.alternative') ) :
-              this.SiteName = dso.firstMetadataValue('place.childLegalName.alternative');
-              break;
-              case (this.localeEn  && !dso.firstMetadataValue('place.childLegalName.alternative') ) :
-                this.SiteName = this.localeService.getStringByLocale(dso.firstMetadataValue('place.childLegalName'));
-                break;
-   
-       }
-      return this.localeService.getStringByLocale(this.SiteName);
+      return this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('place.childLegalName'));
     },
     Activity: (dso: DSpaceObject): string => {
-      this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
-      this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-       switch (true){
-           case (this.localeAr):
-            this.ActivityName = dso.firstMetadataValue('event.childTitle');
-              break;
-              case (this.localeAr && !!dso.firstMetadataValue('event.childTitle.alternative') ) :
-                this.ActivityName = dso.firstMetadataValue('event.childTitle');
-                break;
-            case (this.localeEn && !!dso.firstMetadataValue('event.childTitle.alternative') ) :
-              this.ActivityName = dso.firstMetadataValue('event.childTitle.alternative');
-              break;
-              case (this.localeEn  && !dso.firstMetadataValue('event.childTitle.alternative') ) :
-                this.ActivityName = this.localeService.getStringByLocale(dso.firstMetadataValue('event.childTitle'));
-                break;
-   
-       }
-      return this.localeService.getStringByLocale(this.ActivityName);
+      return this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('event.childTitle'));
     },
     Default: (dso: DSpaceObject): string => {
-            // If object doesn't have dc.title metadata use name property
-             // kware-edit keywords end
-   // kware-edit replace title ith alternative-title of items based on langugae
+        return this.getMetadataByLanguageService.getMeatadataByLanguageByMetadataField(dso.allMetadata('dc.titl')) || dso.name || this.translateService.instant('dso.name.untitled');
 
-   this.localeAr = this.localeService.getCurrentLanguageCode() === 'ar';
-   this.localeEn = this.localeService.getCurrentLanguageCode()   === 'en';
-   this.arabicLang = dso.firstMetadataValue('dc.language.iso') === 'Arabic | العربية';
-   this.englishLang = dso.firstMetadataValue('dc.language.iso') === 'English | الإنجليزية';
-
-    switch (true){
-        case (this.localeAr && this.arabicLang):
-           this.title = dso.firstMetadataValue('dc.title');
-           break;
-         case (this.localeAr && !this.arabicLang && !!dso.firstMetadataValue('dc.title.alternative')  ):
-           this.title = this.localeService.getStringByLocale(dso.firstMetadataValue('dc.title'));
-           break;
-         case (this.localeAr && !this.arabicLang  && !dso.firstMetadataValue('dc.title.alternative') ):
-           this.title = dso.firstMetadataValue('dc.title');
-           break;
-         case (this.localeEn && this.englishLang) :
-           this.title = dso.firstMetadataValue('dc.title');
-           break;
-          case (this.localeEn && !this.englishLang && !!dso.firstMetadataValue('dc.title.alternative')  ) :
-             this.title = dso.firstMetadataValue('dc.title.alternative');
-             break;
-           case (this.localeEn && !this.englishLang && !dso.firstMetadataValue('dc.title.alternative') ) :
-             this.title = this.localeService.getStringByLocale(dso.firstMetadataValue('dc.title'));
-             break;
-
-    }
-    //kware-edit end
-      return dso.firstMetadataValue('dc.title') || dso.name || this.translateService.instant('dso.name.untitled');
     }
   };
 

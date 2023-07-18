@@ -8,6 +8,8 @@
 <div class="modal-body">
     <ds-themed-loading *ngIf="!item || !collection"></ds-themed-loading>
     <ng-container *ngIf="item && collection">
+        <div style="justify-content: space-between;" class="d-flex">
+            <div>
         <ul ngbNav #nav="ngbNav" class="nav-tabs">
             <li ngbNavItem>
                 <a ngbNavLink>{{'submission.sections.describe.relationship-lookup.search-tab.tab-title.' + relationshipOptions.relationshipType | translate  : { count: (totalInternal$ | async)} }}</a>
@@ -64,6 +66,22 @@
                 </ng-template>
             </li>
         </ul>
+        </div>
+                      <!-- kware start edit 
+              -- add fast add btn -->
+              <!-- <div *ngIf="collectionIdByEntity">
+                  <a href="/workspaceitems/{{submissionIdByEntity}}/edit"  class="nav-link btn btn-primary"  role="button" target="_blank"  > <span><i class="fas fa-plus"></i>  {{('entity.add' | translate) + ' ' + (modelPlaceholder?.startsWith('ال') ?  modelPlaceholder.slice(2,1000) : modelPlaceholder)}}</span> 
+                  </a>
+  
+              </div> -->
+
+              <div *ngIf="collectionIdByEntity && isWorkSpace && submissionIdByEntity">
+                <a [routerLink]="['/workspaceitems/',submissionIdByEntity,'edit']" [queryParams]="{ action: 'fastAdd',entityType: relationshipOptions?.searchConfiguration }"  class="nav-link btn btn-primary"  role="button" target="_blank"  > <span><i class="fas fa-plus"></i>  {{('entity.add' | translate) + ' ' + (modelPlaceholder?.startsWith('ال') ?  modelPlaceholder.slice(2,1000) : modelPlaceholder)}}</span> 
+                </a>
+
+            </div>
+            <!-- kware end edit -->
+        </div>
         <div [ngbNavOutlet]="nav"></div>
     </ng-container>
 </div>
